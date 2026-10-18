@@ -19,12 +19,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+/**
+ * Handles web requests for login, dashboard, room management,
+ * guest management, bookings, billing, and reports.
+ * Uses JdbcTemplate to interact with the MySQL database.
+ */
 @Controller
 public class HomeController {
 
     private final JdbcTemplate jdbcTemplate;
-
+    /**
+     * Creates the controller with the database access component.
+     *
+     * @param jdbcTemplate helper for executing SQL queries and updates
+     */
     // Constructor
     public HomeController(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -41,7 +49,16 @@ public class HomeController {
     public String loginPage() {
         return "login";
     }
-
+    /**
+     * Verifies administrator credentials and creates a login session
+     * when authentication succeeds.
+     *
+     * @param username submitted administrator username
+     * @param password submitted administrator password
+     * @param model model used to display login errors
+     * @param session HTTP session used to store login state
+     * @return dashboard redirect on success, or the login page on failure
+     */
     // Check admin login using MySQL
     @PostMapping("/login")
     public String login(
@@ -66,7 +83,12 @@ public class HomeController {
         return "login";
     }
 
-
+    /**
+     * Loads room, guest, booking, and billing statistics for the dashboard.
+     *
+     * @param model model containing statistics displayed by Thymeleaf
+     * @return the dashboard template
+     */
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
 
