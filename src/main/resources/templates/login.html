@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Grand Stay</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #17243a, #385675);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: white;
+            width: 350px;
+            max-width: 92%;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px #00000030;
+        }
+
+        h2 {
+            text-align: center;
+            color: #17243a;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 22px;
+            border: none;
+            border-radius: 6px;
+            background: #e8bd72;
+            color: #17243a;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .error {
+            color: #c62828;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #385675;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+<div class="login-box">
+    <h2>Grand Stay</h2>
+    <p class="subtitle">Hotel Management System</p>
+
+    <form action="/login" method="post">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username"
+               placeholder="Enter username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password"
+               placeholder="Enter password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+
+    <a class="back" href="/">Back to Home</a>
+</div>
+</body>
+</html>

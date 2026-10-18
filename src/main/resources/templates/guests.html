@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Management | Grand Stay</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            color: #252b36;
+        }
+
+        header {
+            background: #17243a;
+            color: white;
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .form-box, .table-box {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px #00000010;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+        }
+
+        button {
+            background: #17243a;
+            color: white;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover { opacity: 0.85; }
+
+        .add-button { margin-top: 20px; }
+
+        .table-wrapper { overflow-x: auto; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        th { background: #edf1f7; }
+
+        .error { color: #c62828; }
+        .success { color: #16803c; }
+
+        .action-cell {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .edit-button { background: #176b50; }
+        .delete-button { background: #b42318; }
+
+        .back-link { color: #17243a; }
+
+        .edit-form {
+            min-width: 220px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .edit-form input { min-width: 180px; }
+
+        @media (max-width: 600px) {
+            main { padding: 0 12px; }
+            .form-box, .table-box { padding: 16px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>Grand Stay — Guest Management</h2>
+    <a href="/dashboard">Back to Dashboard</a>
+</header>
+
+<main>
+
+    <!-- Register Guest -->
+    <section class="form-box">
+        <h1>Register a Guest</h1>
+        <p>Enter the guest's details below.</p>
+
+        <p class="error" th:if="${error}" th:text="${error}"></p>
+        <p class="success" th:if="${success}" th:text="${success}"></p>
+
+        <form action="/guests" method="post">
+            <div class="form-grid">
+                <div>
+                    <label for="fullName">Full Name</label>
+                    <input id="fullName" name="fullName"
+                           type="text" maxlength="100" required>
+                </div>
+
+                <div>
+                    <label for="phone">Phone Number</label>
+                    <input id="phone" name="phone"
+                           type="tel" maxlength="15" required>
+                </div>
+
+                <div>
+                    <label for="email">Email</label>
+                    <input id="email" name="email"
+                           type="email" maxlength="100">
+                </div>
+
+                <div>
+                    <label for="address">Address</label>
+                    <input id="address" name="address"
+                           type="text" maxlength="255">
+                </div>
+            </div>
+
+            <button class="add-button" type="submit">Add Guest</button>
+        </form>
+    </section>
+
+    <!-- Registered Guests -->
+    <section class="table-box">
+        <h2>Registered Guests</h2>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Guest ID</th>
+                    <th>Full Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="guest : ${guests}">
+                    <td th:text="${guest.guestId}"></td>
+
+                    <td>
+                        <form class="edit-form"
+                              th:id="'edit-form-' + ${guest.guestId}"
+                              action="/guests/update"
+                              method="post">
+
+                            <input type="hidden" name="guestId"
+                                   th:value="${guest.guestId}">
+
+                            <input type="text" name="fullName"
+                                   aria-label="Full name"
+                                   th:value="${guest.fullName}"
+                                   maxlength="100" required>
+
+                            <input type="tel" name="phone"
+                                   aria-label="Phone"
+                                   th:value="${guest.phone}"
+                                   maxlength="15" required>
+
+                            <input type="email" name="email"
+                                   aria-label="Email"
+                                   th:value="${guest.email}"
+                                   maxlength="100">
+
+                            <input type="text" name="address"
+                                   aria-label="Address"
+                                   th:value="${guest.address}"
+                                   maxlength="255">
+                        </form>
+                    </td>
+
+                    <td colspan="3">
+                        <span>Update the fields in the guest details form.</span>
+                    </td>
+
+                    <td>
+                        <div class="action-cell">
+                            <button type="submit"
+                                    class="edit-button"
+                                    th:form="'edit-form-' + ${guest.guestId}">
+                                Save
+                            </button>
+
+                            <form action="/guests/delete" method="post"
+                                  onsubmit="return confirm('Delete this guest? Guests with booking records cannot be deleted.');">
+
+                                <input type="hidden" name="guestId"
+                                       th:value="${guest.guestId}">
+
+                                <button type="submit" class="delete-button">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(guests)}">
+                    <td colspan="6">No guests registered yet.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p><a class="back-link" href="/dashboard">Back to Dashboard</a></p>
+    </section>
+
+</main>
+</body>
+</html>

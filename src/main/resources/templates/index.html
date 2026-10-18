@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Stay | Hotel Management</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            color: #252b36;
+        }
+
+        nav {
+            background: #17243a;
+            color: white;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            color: #e8bd72;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 22px;
+        }
+
+        .hero {
+            background: linear-gradient(120deg, #17243a, #385675);
+            color: white;
+            text-align: center;
+            padding: 90px 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 28px;
+            color: #e0e6ef;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #e8bd72;
+            color: #17243a;
+            padding: 13px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .section {
+            padding: 55px 8%;
+            text-align: center;
+        }
+
+        .section h2 {
+            margin-bottom: 15px;
+        }
+
+        .rooms {
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .room {
+            background: white;
+            padding: 28px;
+            border-radius: 12px;
+            width: 260px;
+            box-shadow: 0 4px 15px #00000010;
+        }
+
+        .room h3 {
+            margin: 12px 0;
+        }
+
+        .room p {
+            color: #626b79;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #17243a;
+            color: white;
+            text-align: center;
+            padding: 22px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <h2>Grand Stay</h2>
+    <div>
+        <a href="/">Home</a>
+        <a href="#rooms">Rooms</a>
+        <a href="/login">Login</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <h1>Welcome to Grand Stay</h1>
+    <p>Comfort, elegance, and a better hotel experience.</p>
+    <a href="#rooms" class="btn">Explore Our Rooms</a>
+</section>
+
+<section class="section" id="rooms">
+    <h2>Our Room Categories</h2>
+    <p>Choose a room that suits your stay.</p>
+
+    <div class="rooms">
+        <div class="room">
+            <div style="font-size: 38px;">🛏️</div>
+            <h3>Standard Room</h3>
+            <p>Comfortable accommodation for everyday stays.</p>
+        </div>
+
+        <div class="room">
+            <div style="font-size: 38px;">🏨</div>
+            <h3>Deluxe Room</h3>
+            <p>Extra space and comfort for a relaxing visit.</p>
+        </div>
+
+        <div class="room">
+            <div style="font-size: 38px;">✨</div>
+            <h3>Suite Room</h3>
+            <p>A spacious room for a premium experience.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>Grand Stay Hotel Management System | Java Project</p>
+</footer>
+
+</body>
+</html>

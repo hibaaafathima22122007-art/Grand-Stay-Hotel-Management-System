@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Grand Stay</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            color: #252b36;
+        }
+
+        header {
+            background: #17243a;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            background: #dc2626;
+            padding: 10px 16px;
+            border-radius: 6px;
+        }
+
+        .logout:hover {
+            background: #b91c1c;
+        }
+
+        main {
+            padding: 35px 8%;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome p {
+            color: #64748b;
+        }
+
+        .section-title {
+            margin-top: 32px;
+            margin-bottom: 16px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 18px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px #00000010;
+            border-left: 5px solid #1769aa;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 14px;
+            color: #64748b;
+            font-size: 15px;
+            font-weight: normal;
+        }
+
+        .stat-card .number {
+            margin: 0;
+            font-size: 30px;
+            font-weight: bold;
+            color: #17243a;
+            overflow-wrap: anywhere;
+        }
+
+        .blue {
+            border-left-color: #1769aa;
+        }
+
+        .green {
+            border-left-color: #16a34a;
+        }
+
+        .orange {
+            border-left-color: #ea580c;
+        }
+
+        .red {
+            border-left-color: #dc2626;
+        }
+
+        .purple {
+            border-left-color: #7c3aed;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 16px;
+        }
+
+        .nav-card {
+            display: block;
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #17243a;
+            box-shadow: 0 4px 15px #00000010;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px #00000015;
+        }
+
+        .nav-card h3 {
+            margin: 0 0 10px;
+        }
+
+        .nav-card p {
+            margin: 0;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        footer {
+            padding: 25px 8%;
+            color: #64748b;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 18px 5%;
+            }
+
+            main {
+                padding: 25px 5%;
+            }
+
+            .stats-grid,
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>Grand Stay</h2>
+    <a class="logout" th:href="@{/logout}">Logout</a>
+</header>
+
+<main>
+
+    <section class="welcome">
+        <h1>Hotel Dashboard</h1>
+        <p>Welcome to Grand Stay. Here's your hotel's current overview.</p>
+    </section>
+
+    <h2 class="section-title">Room Overview</h2>
+
+    <section class="stats-grid">
+        <div class="stat-card blue">
+            <h3>Total Rooms</h3>
+            <p class="number" th:text="${totalRooms}">0</p>
+        </div>
+
+        <div class="stat-card green">
+            <h3>Available Rooms</h3>
+            <p class="number" th:text="${availableRooms}">0</p>
+        </div>
+
+        <div class="stat-card orange">
+            <h3>Occupied Rooms</h3>
+            <p class="number" th:text="${occupiedRooms}">0</p>
+        </div>
+
+        <div class="stat-card red">
+            <h3>Rooms Under Maintenance</h3>
+            <p class="number" th:text="${maintenanceRooms}">0</p>
+        </div>
+    </section>
+
+    <h2 class="section-title">Guests &amp; Bookings</h2>
+
+    <section class="stats-grid">
+        <div class="stat-card purple">
+            <h3>Registered Guests</h3>
+            <p class="number" th:text="${totalGuests}">0</p>
+        </div>
+
+        <div class="stat-card blue">
+            <h3>Total Bookings</h3>
+            <p class="number" th:text="${totalBookings}">0</p>
+        </div>
+
+        <div class="stat-card green">
+            <h3>Confirmed Bookings</h3>
+            <p class="number" th:text="${confirmedBookings}">0</p>
+        </div>
+
+        <div class="stat-card red">
+            <h3>Cancelled Bookings</h3>
+            <p class="number" th:text="${cancelledBookings}">0</p>
+        </div>
+    </section>
+
+    <h2 class="section-title">Billing Overview</h2>
+
+    <section class="stats-grid">
+        <div class="stat-card purple">
+            <h3>Total Bills Generated</h3>
+            <p class="number" th:text="${totalBills}">0</p>
+        </div>
+
+        <div class="stat-card orange">
+            <h3>Pending Payments</h3>
+            <p class="number"
+               th:text="${'₹' + #numbers.formatDecimal(pendingPayments, 1, 2)}">
+                ₹0.00
+            </p>
+        </div>
+    </section>
+
+    <h2 class="section-title">Management</h2>
+
+    <section class="links-grid">
+        <a class="nav-card" th:href="@{/rooms}">
+            <h3>Room Management</h3>
+            <p>Add rooms, edit room details, and manage room status.</p>
+        </a>
+
+        <a class="nav-card" th:href="@{/guests}">
+            <h3>Guest Management</h3>
+            <p>Register guests and update their information.</p>
+        </a>
+
+        <a class="nav-card" th:href="@{/bookings}">
+            <h3>Booking Management</h3>
+            <p>Create bookings, check date availability, and cancel bookings.</p>
+        </a>
+
+        <a class="nav-card" th:href="@{/billing}">
+            <h3>Billing &amp; Payments</h3>
+            <p>Generate bills and record payments.</p>
+        </a>
+
+        <a class="nav-card" th:href="@{/reports}">
+            <h3>Reports</h3>
+            <p>View hotel statistics and billing summaries.</p>
+        </a>
+    </section>
+
+</main>
+
+<footer>
+    Grand Stay Hotel Management System
+</footer>
+
+</body>
+</html>
+```
