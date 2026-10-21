@@ -24,16 +24,19 @@ import org.springframework.web.bind.annotation.RequestParam;
  * guest management, bookings, billing, and reports.
  * Uses JdbcTemplate to interact with the MySQL database.
  */
+
 @Controller
 public class HomeController {
 
     private final JdbcTemplate jdbcTemplate;
+
+    // Constructor
     /**
      * Creates the controller with the database access component.
      *
      * @param jdbcTemplate helper for executing SQL queries and updates
      */
-    // Constructor
+
     public HomeController(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -49,6 +52,8 @@ public class HomeController {
     public String loginPage() {
         return "login";
     }
+
+    // Check admin login using MySQL
     /**
      * Verifies administrator credentials and creates a login session
      * when authentication succeeds.
@@ -59,7 +64,6 @@ public class HomeController {
      * @param session HTTP session used to store login state
      * @return dashboard redirect on success, or the login page on failure
      */
-    // Check admin login using MySQL
     @PostMapping("/login")
     public String login(
             @RequestParam String username,
@@ -82,7 +86,11 @@ public class HomeController {
         model.addAttribute("error", "Invalid username or password!");
         return "login";
     }
-
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    }
     /**
      * Loads room, guest, booking, and billing statistics for the dashboard.
      *
@@ -856,11 +864,6 @@ public class HomeController {
         }
 
         return "redirect:/billing";
-    }
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login";
     }
 
 
